@@ -54,4 +54,5 @@ group :test do
   gem 'guard-rspec'
   gem 'sqlite3'
   gem 'capybara'
+  gem 'launchy'
 end

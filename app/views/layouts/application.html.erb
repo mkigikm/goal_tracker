@@ -5,6 +5,15 @@
 </head>
 <body>
 
+<% if logged_in? %>
+Hello <%= current_user.name %>
+
+<form action="<%= session_url %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="_method" value="delete">
+  <button>Sign Out</button>
+</form>
+<% end %>
 <%= yield %>
 
 </body>

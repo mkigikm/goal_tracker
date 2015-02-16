@@ -6,8 +6,13 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.valid?
-    render :new
+
+    if @user.save
+      log_in!(@user)
+      redirect_to goals_url
+    else
+      render :new
+    end
   end
 
   private
