@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
+  has_many :goals
+
   def self.find_by_credentials(name, password)
     user = User.find_by(name: name)
     user = nil unless user && user.is_password?(password)
