@@ -13,6 +13,14 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
+  def require_logged_out
+    redirect_to goals_url if logged_in?
+  end
+
+  def require_logged_in
+    redirect_to goals_url unless logged_in?
+  end
+
   private
   def log_in!(user)
     session[:token] = user[:session_token]

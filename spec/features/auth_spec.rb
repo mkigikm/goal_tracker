@@ -38,6 +38,20 @@ feature "the signup process" do
 
       expect(page).to have_content("Name has already been taken")
     end
+
+    it "doesn't allow signed in users access to the new user page" do
+      sign_up("matt")
+      visit new_user_url
+
+      expect(page).to_not have_content "Sign up for Goal Tracker"
+    end
   end
 
+  feature "signing in as a user" do
+    it "takes the user to the goals page after sign in"
+
+    it "takes the user to the sign in page after signing out"
+
+    it "doesn't allow signed in users to sign in again"
+  end
 end
