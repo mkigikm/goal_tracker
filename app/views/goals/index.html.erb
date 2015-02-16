@@ -7,11 +7,12 @@
   <tr>
     <th>Title</th><th>Status</th><th>Completion Date</th><th>Due Date</th>
   </tr>
+
   <tbody>
     <% current_user.goals.each do |goal| %>
     <tr>
       <td>
-        <a href="edit_goal_url(goal)"><%= goal.title %></a>
+        <a href="<%= goal_url(goal) %>"><%= goal.title %></a>
       </td>
       <td>
         <%= goal_status(goal) %>
@@ -25,9 +26,40 @@
     </tr>
     <% end %>
   </tbody>
+
   <tr>
     <td>
       <a href="<%= new_goal_url %>">Add Goal</a>
     </td>
   </tr>
+</table>
+
+<h2>Public Goals</h2>
+<table>
+  <tr>
+    <th>User</th><th>Title</th><th>Status</th><th>Completion Date</th>
+    <th>Due Date</th>
+  </tr>
+
+  <tbody>
+    <% Goal.public_goals(current_user).each do |goal| %>
+    <tr>
+      <td>
+        <%= goal.user.name %>
+      </td>
+      <td>
+        <a href="<%= goal_url(goal) %>"><%= goal.title %></a>
+      </td>
+      <td>
+        <%= goal_status(goal) %>
+      </td>
+      <td>
+        <%= goal.completed_on %>
+      </td>
+      <td>
+        <%= goal.due_by %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
 </table>

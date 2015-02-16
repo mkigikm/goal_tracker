@@ -24,26 +24,50 @@ feature "adding goals process" do
     end
 
     it "adds a goal to the users list" do
-      visit new_goal_url
-      fill_in "Title", with: "learn rails"
-      choose "Public"
-      click_button "Create Goal"
+      add_goal("learn rails")
 
       expect(page).to have_content("learn rails")
     end
 
     it "displays public goals to all users" do
-      visit new_goal_url
-      fill_in "Title", with: "learn rails"
-      choose "Public"
-      click_button "Create Goal"
+      add_goal("learn rails")
       click_button "Sign Out"
       sign_up("john")
       visit goals_url
 
       expect(page).to have_content("learn rails")
+      expect(page).to have_content("matt")
     end
 
-    it "hides private goals from other users"
+    it "hides private goals from other users" do
+      add_goal("learn rails", false)
+      click_button "Sign Out"
+      sign_up("john")
+      visit goals_url
+
+      expect(page).to_not have_content("learn rails")
+    end
+  end
+end
+
+feature "viewing goals" do
+  before :each do
+    sign_up("matt")
+    add_goal("learn rails")
+  end
+
+  it "shows a user their goals" do
+    visit goals_url
+    click_link "learn rails"
+
+    expect(page).to have_content("Viewing learn rails")
+  end
+
+  it "shows public goals to other users" do
+    click_button "Sign Out"
+    sign_up("john")
+    click_link "learn rails"
+
+    expect(page).to have_content("Viewing learn rails for matt")
   end
 end

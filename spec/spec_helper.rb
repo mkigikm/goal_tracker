@@ -99,3 +99,10 @@ def sign_in(name, password)
   fill_in "Password", with: password
   click_on "Sign In"
 end
+
+def add_goal(title, public=true)
+  visit new_goal_url
+  fill_in "Title", with: "learn rails"
+  choose "Public" if public
+  click_button "Create Goal"
+end
