@@ -15,10 +15,10 @@
   </tr>
 
   <tbody>
-    <% Goal.where("public = true").each do |goal| %>
+    <% Goal.where("public").each do |goal| %>
     <tr>
       <td>
-        <a href="<%= user_url(goal.user) %>"><%= goal.user.name %></a>
+        <a href="<%= user_url(goal.user.name) %>"><%= goal.user.name %></a>
       </td>
       <td>
         <a href="<%= goal_url(goal) %>"><%= goal.title %></a>
