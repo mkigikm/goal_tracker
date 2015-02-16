@@ -1,0 +1,24 @@
+<table>
+  <tr>
+    <th>Title</th><th>Status</th><th>Completion Date</th><th>Due Date</th>
+  </tr>
+
+  <tbody>
+    <% goals.each do |goal| %>
+    <tr>
+      <td>
+        <a href="<%= goal_url(goal) %>"><%= goal.title %></a>
+      </td>
+      <td>
+        <%= goal_status(goal) %>
+      </td>
+      <td>
+        <%= goal.completed_on %>
+      </td>
+      <td>
+        <%= goal.due_by %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

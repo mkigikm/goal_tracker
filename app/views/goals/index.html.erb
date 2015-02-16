@@ -3,36 +3,9 @@
 <h1>All Goals</h1>
 
 <h2>My Goals</h2>
-<table>
-  <tr>
-    <th>Title</th><th>Status</th><th>Completion Date</th><th>Due Date</th>
-  </tr>
+<%= render partial: "shared/user_goals", locals: {goals: current_user.goals} %>
 
-  <tbody>
-    <% current_user.goals.each do |goal| %>
-    <tr>
-      <td>
-        <a href="<%= goal_url(goal) %>"><%= goal.title %></a>
-      </td>
-      <td>
-        <%= goal_status(goal) %>
-      </td>
-      <td>
-        <%= goal.completed_on %>
-      </td>
-      <td>
-        <%= goal.due_by %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-
-  <tr>
-    <td>
-      <a href="<%= new_goal_url %>">Add Goal</a>
-    </td>
-  </tr>
-</table>
+<a href="<%= new_goal_url %>">Add Goal</a>
 
 <h2>Public Goals</h2>
 <table>
@@ -42,10 +15,10 @@
   </tr>
 
   <tbody>
-    <% Goal.public_goals(current_user).each do |goal| %>
+    <% Goal.where("public = true").each do |goal| %>
     <tr>
       <td>
-        <%= goal.user.name %>
+        <a href="<%= user_url(goal.user) %>"><%= goal.user.name %></a>
       </td>
       <td>
         <a href="<%= goal_url(goal) %>"><%= goal.title %></a>
