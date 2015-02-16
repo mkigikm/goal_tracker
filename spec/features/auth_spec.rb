@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'rails_helper'
 
 feature "the signup process" do
-
   it "has a new user page" do
     visit new_user_url
     expect(page).to have_content "Sign up for Goal Tracker"
@@ -63,7 +62,7 @@ feature "the signup process" do
       fill_in "Name", with: "matt"
       click_button "Sign In"
 
-      expect(page).to have_content "Sign in"
+      expect(page).to have_content "Incorrect Password"
     end
 
     it "takes the user to the goals page after sign in" do
@@ -97,5 +96,4 @@ feature "the signup process" do
       expect(page).to have_content "Sign in"
     end
   end
-
 end

@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
 
   def new
     @user = User.new
+    @password_error = []
     render :new
   end
 
@@ -20,6 +21,7 @@ class SessionsController < ApplicationController
       redirect_to goals_url
     else
       @user = User.new(name: params[:user][:name])
+      @password_error = ["Incorrect Password"]
       render :new
     end
   end

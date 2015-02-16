@@ -3,7 +3,7 @@
 <h1>Sign up for Goal Tracker</h1>
 
 <%= render partial: "shared/errors",
-      locals: {errors: @user.errors} %>
+      locals: {errors: @user.errors.full_messages} %>
 
 <form action="<%= users_url %>" method="post">
   <%= auth_token %>
