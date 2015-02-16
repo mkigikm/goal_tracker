@@ -1,5 +1,7 @@
 class GoalsController < ApplicationController
   before_action :require_logged_in
+  before_action :require_goal_owner, only: [:edit, :update]
+  before_action :require_goal_owner_or_public, only: [:show]
 
   def index
     render :index
@@ -21,17 +23,42 @@ class GoalsController < ApplicationController
   end
 
   def show
-    @goal = find_goal
+    find_goal
     render :show
+  end
+
+  def edit
+    find_goal
+    render :edit
+  end
+
+  def update
+    find_goal
+
+    if @goal.update(goal_params)
+      redirect_to goal_url(@goal)
+    else
+      render :edit
+    end
   end
 
   private
   def goal_params
     params.require(:goal).permit(:title, :public, :due_by, :description,
-      :progress)
+      :progress, :completed_on)
   end
 
   def find_goal
-    Goal.find(params[:id])
+    @goal ||= Goal.find(params[:id])
+  end
+
+  def require_goal_owner
+    redirect_to goals_url unless find_goal.user == current_user
+  end
+
+  def require_goal_owner_or_public
+    unless find_goal.public || find_goal.user == current_user
+      redirect_to goals_url
+    end
   end
 end

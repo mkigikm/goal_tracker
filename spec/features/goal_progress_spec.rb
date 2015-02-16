@@ -78,6 +78,36 @@ feature "editing goals" do
     add_goal("learn rails")
   end
 
-  it "shows an edit page"
+  it "shows an edit page" do
+    click_link "learn rails"
+    click_link "Edit"
 
-  it "validates and displays errors in editing"
+    expect(page).to have_content("Edit learn rails")
+  end
+
+  it "hides the edit link from other users" do
+    click_button "Sign Out"
+    sign_up("john")
+    click_link "learn rails"
+
+    expect(page).to_not have_content("Edit")
+  end
+
+  it "validates and displays errors in editing" do
+    click_link "learn rails"
+    click_link "Edit"
+    fill_in "Title", with: ""
+    click_button "Edit Goal"
+
+    expect(page).to have_content("Title can't be blank")
+  end
+
+  it "edits goal and goes to the goal page" do
+    click_link "learn rails"
+    click_link "Edit"
+    fill_in "Title", with: "learning rails"
+    click_button "Edit Goal"
+
+    expect(page).to have_content("learning rails")
+  end
+end

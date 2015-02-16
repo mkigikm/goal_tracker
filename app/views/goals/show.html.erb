@@ -15,3 +15,7 @@
   Progress: <%= @goal.progress %>
 </p>
 <% end %>
+
+<% if @goal.user == current_user %>
+<a href="<%= edit_goal_url(@goal) %>">Edit</a>
+<% end %>

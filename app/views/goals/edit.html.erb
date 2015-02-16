@@ -1,0 +1,8 @@
+<% title "Edit Your Goal" %>
+
+<h1>Edit <%= @goal.title %></h1>
+
+<%= render partial: "shared/errors",
+      locals: {errors: @goal.errors.full_messages} %>
+
+<%= render partial: "form", locals: {goal: @goal} %>
