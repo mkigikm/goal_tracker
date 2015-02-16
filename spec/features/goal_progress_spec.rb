@@ -46,6 +46,7 @@ feature "adding goals process" do
       visit goals_url
 
       expect(page).to_not have_content("learn rails")
+      expect(page).to have_content("All Goals")
     end
   end
 end
@@ -90,6 +91,7 @@ feature "editing goals" do
     sign_up("john")
     click_link "learn rails"
 
+    expect(page).to have_content("learn rails")
     expect(page).to_not have_content("Edit")
   end
 
@@ -109,5 +111,28 @@ feature "editing goals" do
     click_button "Edit Goal"
 
     expect(page).to have_content("learning rails")
+    expect(page).to_not have_content("learn rails")
+  end
+end
+
+feature "deleting goals" do
+  before :each do
+    sign_up("matt")
+    add_goal("learn rails")
+  end
+
+  it "shows a delete button on the edit page" do
+    click_link "learn rails"
+    click_link "Edit"
+
+    expect(page).to have_content("Delete")
+  end
+
+  it "removes a deleted goal" do
+    click_link "learn rails"
+    click_link "Edit"
+    click_button "Delete"
+
+    expect(page).to_not have_content("learn rails")
   end
 end

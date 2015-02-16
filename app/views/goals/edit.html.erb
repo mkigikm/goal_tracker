@@ -6,3 +6,11 @@
       locals: {errors: @goal.errors.full_messages} %>
 
 <%= render partial: "form", locals: {goal: @goal} %>
+
+<form action="<%= goal_url(@goal) %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="_method" value="delete">
+  <button>Delete</button>
+</form>
+
+<a href="<%= goal_url(@goal) %>">Cancel</a>
