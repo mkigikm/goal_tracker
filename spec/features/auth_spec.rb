@@ -19,10 +19,20 @@ feature "the signup process" do
     end
 
     it "requires a minimum password length" do
-      click_on "Sign Up"
       fill_in "Name", with: "matt"
       fill_in "Password", with: "abcde"
-      expect(page).to have_content("Password must be at least 6 characters")
+      click_on "Sign Up"
+      expect(page).to have_content("Password is too short")
+    end
+
+    it "requires unique usernames" do
+      click_on "Sign Up"
+      fill_in "Name", with: "matt"
+      fill_in "Password", with: "abcdef"
+      visit new_user_url
+      fill_in "Name", with: "matt"
+      fill_in "Password", with: "abcdef"
+      expect(page).to have_content("Name has already been taken")
     end
 
     it "show username on the homepage after signup" do
