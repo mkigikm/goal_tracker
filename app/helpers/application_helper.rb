@@ -9,4 +9,14 @@ module ApplicationHelper
      value="#{form_authenticity_token}">
     HTML
   end
+
+  def goal_status(goal)
+    if goal.completed_on
+      "Complete"
+    elsif goal.due_by.nil? || Date.today < goal.due_by
+      "In Progress"
+    else
+      "Overdue"
+    end
+  end
 end

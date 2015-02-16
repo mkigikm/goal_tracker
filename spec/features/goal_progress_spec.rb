@@ -32,7 +32,18 @@ feature "adding goals process" do
       expect(page).to have_content("learn rails")
     end
 
-    it "displays public goals to all users"
+    it "displays public goals to all users" do
+      visit new_goal_url
+      fill_in "Title", with: "learn rails"
+      choose "Public"
+      click_button "Create Goal"
+      click_button "Sign Out"
+      sign_up("john")
+      visit goals_url
+
+      expect(page).to have_content("learn rails")
+    end
+
     it "hides private goals from other users"
   end
 end
