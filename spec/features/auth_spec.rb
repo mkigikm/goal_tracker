@@ -9,8 +9,28 @@ feature "the signup process" do
   end
 
   feature "signing up a user" do
+    before :each do
+      visit new_user_url
+    end
 
-    it "show username on the homepage after signup"
+    it "requires a name" do
+      click_on "Sign Up"
+      expect(page).to have_content("Name can't be blank")
+    end
+
+    it "requires a minimum password length" do
+      click_on "Sign Up"
+      fill_in "Name", with: "matt"
+      fill_in "Password", with: "abcde"
+      expect(page).to have_content("Password must be at least 6 characters")
+    end
+
+    it "show username on the homepage after signup" do
+      fill_in "Name", with: "matt"
+      fill_in "Password", with: "password"
+      click_on "Sign Up"
+      expect(page).to have_content("matt")
+    end
 
   end
 
