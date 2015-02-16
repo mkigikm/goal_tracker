@@ -47,11 +47,55 @@ feature "the signup process" do
     end
   end
 
-  feature "signing in as a user" do
-    it "takes the user to the goals page after sign in"
-
-    it "takes the user to the sign in page after signing out"
-
-    it "doesn't allow signed in users to sign in again"
+  it "has a sign in page" do
+    visit new_session_url
+    expect(page).to have_content "Sign in"
   end
+
+  feature "signing in as a user" do
+    before :each do
+      sign_up("matt")
+      click_button("Sign Out")
+    end
+
+    it "doesn't allow access with the wrong password" do
+      visit new_session_url
+      fill_in "Name", with: "matt"
+      click_button "Sign In"
+
+      expect(page).to have_content "Sign in"
+    end
+
+    it "takes the user to the goals page after sign in" do
+      visit new_session_url
+      sign_in("matt", "abcdef")
+
+      expect(page).to have_content "All Goals"
+      expect(page).to have_content "matt"
+    end
+
+    it "doesn't allow signed in users to sign in again" do
+      visit new_session_url
+      sign_in("matt", "abcdef")
+      visit new_session_url
+
+      expect(page).to have_content "All Goals"
+    end
+  end
+
+  feature "signing out" do
+    it "begins logged out" do
+      visit goals_url
+
+      expect(page).to have_content "Sign in"
+    end
+
+    it "takes the user to the sign in page after signing out" do
+      sign_up("matt")
+      click_button "Sign Out"
+
+      expect(page).to have_content "Sign in"
+    end
+  end
+
 end

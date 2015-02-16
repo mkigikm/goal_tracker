@@ -92,3 +92,10 @@ def sign_up(name)
   fill_in "Password", with: "abcdef"
   click_on "Sign Up"
 end
+
+def sign_in(name, password)
+  visit new_session_url
+  fill_in "Name", with: name
+  fill_in "Password", with: password
+  click_on "Sign In"
+end
