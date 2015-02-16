@@ -1,1 +1,17 @@
 <h1>Viewing <%= @goal.title %><%= " for #{@goal.user.name}" unless current_user == @goal.user %></h1>
+
+<p>
+  This goal is <%= goal_status(@goal).downcase %> and is <%= @goal.public ? "public" : "private" %>.
+</p>
+
+<% unless @goal.description.empty? %>
+<p>
+  Description: <%= @goal.description %>
+</p>
+<% end %>
+
+<% unless @goal.progress.empty? %>
+<p>
+  Progress: <%= @goal.progress %>
+</p>
+<% end %>

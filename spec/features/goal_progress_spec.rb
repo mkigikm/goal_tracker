@@ -71,3 +71,13 @@ feature "viewing goals" do
     expect(page).to have_content("Viewing learn rails for matt")
   end
 end
+
+feature "editing goals" do
+  before :each do
+    sign_up("matt")
+    add_goal("learn rails")
+  end
+
+  it "shows an edit page"
+
+  it "validates and displays errors in editing"
